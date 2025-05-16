@@ -33,10 +33,11 @@ const App: React.FC<Props> = (props) => {
         <div className={style.header}>
           <div className={style.title}>{title}</div>
           <div className={style.actions}>
-            <Button type="primary" ghost icon={<CopyOutlined />} onClick={onCopy} />
+            <Button type="primary" size="small" ghost icon={<CopyOutlined />} onClick={onCopy} />
             <Button
               type="primary"
               ghost
+              size="small"
               icon={fullScreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
               onClick={() => setFullScreen((prev) => !prev)}
             />

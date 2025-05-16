@@ -25,7 +25,9 @@ const App: React.FC = () => {
   return (
     <div>
       <Card title="测试卡片"></Card>
-      <ChartCard option={options} />
+      <div style={{ height: 400 }}>
+        <ChartCard option={options} />
+      </div>
     </div>
   )
 }
