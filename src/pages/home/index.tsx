@@ -1,10 +1,31 @@
 import React from 'react'
-import ThreeModel from '@/components/ThreeModel'
+// import ThreeModel from '@/components/ThreeModel'
+import Card from '@/components/Card'
+import ChartCard from '@/components/ChartCard'
+import * as echarts from 'echarts'
 
 const App: React.FC = () => {
+  const options = {
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line',
+        smooth: true,
+      },
+    ],
+  } as echarts.EChartsOption
+
   return (
-    <div style={{ height: 400 }}>
-      <ThreeModel />
+    <div>
+      <Card title="测试卡片"></Card>
+      <ChartCard option={options} />
     </div>
   )
 }

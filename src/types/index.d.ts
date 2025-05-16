@@ -1,3 +1,8 @@
+declare module '*.svg?react' {
+  const content: React.FC<React.SVGAttributes<SVGElement>>
+  export default content
+}
+
 interface ApiRes<T> {
   code: number
   msg: string
