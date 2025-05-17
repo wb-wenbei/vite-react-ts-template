@@ -1,18 +1,51 @@
 import React from 'react'
-import { Outlet } from 'react-router'
-import { Menu } from 'antd'
+import { Outlet, useLocation, useNavigate } from 'react-router'
+import { Avatar, Dropdown, Menu, Space } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import styles from './index.module.less'
+import useUserStore from '@/stores/user'
 
 const App: React.FC = () => {
-  const items1: MenuProps['items'] = [
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { clear } = useUserStore()
+  const activeMenu = location.pathname
+
+  const menuItems: MenuProps['items'] = [
     {
-      key: 'home',
+      key: '/',
       label: `首页`,
     },
     {
-      key: 'analysis',
+      key: '/analysis',
       label: `效果分析`,
+    },
+  ]
+
+  const menuClick: MenuProps['onClick'] = (e) => {
+    navigate(e.key)
+  }
+
+  const actionClick: MenuProps['onClick'] = (e) => {
+    if (e.key === 'logout') {
+      clear()
+      window.location.href = '/login'
+    }
+  }
+
+  const userItems: MenuProps['items'] = [
+    {
+      key: 'user',
+      label: 'username',
+      disabled: true,
+    },
+    {
+      type: 'divider',
+    },
+    {
+      key: 'logout',
+      label: '退出登录',
     },
   ]
 
@@ -24,15 +57,12 @@ const App: React.FC = () => {
           <div>系统名称</div>
           <div>系统子名称</div>
         </div>
-        <div className={styles.menus}>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['2']}
-            items={items1}
-            style={{ flex: 1, minWidth: 0 }}
-          />
-        </div>
+        <Space size="middle">
+          <Menu selectedKeys={[activeMenu]} theme="dark" mode="horizontal" items={menuItems} onClick={menuClick} />
+          <Dropdown menu={{ items: userItems, onClick: actionClick }} trigger={['click']}>
+            <Avatar icon={<UserOutlined />} />
+          </Dropdown>
+        </Space>
       </div>
       <div className={styles.content}>
         <Outlet />

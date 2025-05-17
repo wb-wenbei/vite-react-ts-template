@@ -10,7 +10,7 @@ type Props = {
 const App: React.FC<Props> = ({ children }) => {
   const { token } = useUserStore()
 
-  if (token) return <Navigate to="/login" />
+  if (!token) return <Navigate to="/login" />
 
   return children
 }

@@ -1,0 +1,79 @@
+enum AuthenticationProtocol {
+  Md5 = 'MD5',
+  SHA1 = 'SHA_1',
+  SHA224 = 'SHA_224',
+  SHA256 = 'SHA_256',
+  SHA384 = 'SHA_384',
+  SHA512 = 'SHA_512',
+}
+
+enum PowerMode {
+  Drx = 'DRX',
+  EDrx = 'E_DRX',
+  PSM = 'PSM',
+}
+
+enum PrivacyProtocol {
+  AES128 = 'AES_128',
+  AES192 = 'AES_192',
+  AES256 = 'AES_256',
+  DES = 'DES',
+}
+
+enum ProtocolVersion {
+  V1 = 'V1',
+  V2C = 'V2C',
+  V3 = 'V3',
+}
+
+interface Device {
+  name: string
+  id?: DataId
+  tenantId?: DataId
+  customerId?: DataId
+  softwareId?: DataId
+  deviceProfileId: DataId
+  firmwareId?: DataId
+  deviceData?: DeviceData
+  createdTime?: number
+  label?: string
+  type?: string
+  version?: number
+  additionalInfo?: Record<string, unknown>
+}
+
+interface DeviceData {
+  configuration?: Configuration
+  transportConfiguration?: TransportConfiguration
+}
+
+interface Configuration {
+  type: string
+}
+
+interface TransportConfiguration {
+  type: string
+  edrxCycle?: number
+  pagingTransmissionWindow?: number
+  powerMode?: PowerMode
+  psmActivityTimer?: number
+  authenticationPassphrase?: string
+  authenticationProtocol?: AuthenticationProtocol
+  community?: string
+  contextName?: string
+  engineId?: string
+  host?: string
+  port?: number
+  privacyPassphrase?: string
+  privacyProtocol?: PrivacyProtocol
+  protocolVersion?: ProtocolVersion
+  securityName?: string
+  username?: string
+}
+
+interface DeviceTimeserie {
+  [key: string]: {
+    ts: number
+    value: string
+  }[]
+}

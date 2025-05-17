@@ -3,17 +3,45 @@ declare module '*.svg?react' {
   export default content
 }
 
-interface ApiRes<T> {
-  code: number
-  msg: string
-  data: T
+interface ApiError {
+  errorCode: number
+  message: string
+  status: number
+  timestamp: number
+}
+
+interface LoginRes {
+  token: string
+  refreshToken: string
+}
+
+interface PageParams<T extends object> extends T {
+  page: number
+  pageSize: number
+}
+
+interface PageList<T> {
+  data: T[]
+  hasNext: boolean
+  totalElements: number
+  totalPage: number
+}
+
+interface DataId {
+  id: string
+  entityType: CustomerIdEntityType
 }
 
 interface User {
-  id: number
+  id: DataId
+  tenantId: DataId
+  customerId: DataId
   name: string
+  firstName?: string
+  lastName?: string
+  authority: string
   email: string
-  roles: string[]
+  phone: number
 }
 
 interface CompanyInfo {

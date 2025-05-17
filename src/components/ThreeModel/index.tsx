@@ -3,11 +3,13 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
+let renderer: THREE.WebGLRenderer
+
 const App: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!containerRef.current || renderer) return
 
     const { clientWidth, clientHeight } = containerRef.current
 
@@ -19,7 +21,7 @@ const App: React.FC = () => {
     camera.position.z = 5
 
     // 创建渲染器
-    const renderer = new THREE.WebGLRenderer()
+    renderer = new THREE.WebGLRenderer()
     renderer.setSize(clientWidth, clientHeight)
     containerRef.current.appendChild(renderer.domElement)
 
