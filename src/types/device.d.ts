@@ -77,3 +77,43 @@ interface DeviceTimeserie {
     value: string
   }[]
 }
+
+enum Agg {
+  Avg = 'AVG',
+  Count = 'COUNT',
+  Max = 'MAX',
+  Min = 'MIN',
+  None = 'NONE',
+  Sum = 'SUM',
+}
+
+enum IntervalType {
+  Milliseconds = 'MILLISECONDS',
+  Month = 'MONTH',
+  Quarter = 'QUARTER',
+  Week = 'WEEK',
+  WeekISO = 'WEEK_ISO',
+}
+
+enum OrderBy {
+  Asc = 'ASC',
+  Desc = 'DESC',
+}
+
+interface DeviceTimeserieQuery {
+  agg?: Agg
+  endTs: number
+  interval?: number
+  intervalType?: IntervalType
+  keys: string
+  limit?: number
+  orderBy?: OrderBy
+  startTs: number
+  timeZone?: string
+  useStrictDataTypes?: boolean
+}
+
+interface LatestDeviceTimeserieQuery {
+  keys?: string
+  useStrictDataTypes?: boolean
+}

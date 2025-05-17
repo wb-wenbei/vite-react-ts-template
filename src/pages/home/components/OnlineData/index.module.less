@@ -1,0 +1,47 @@
+.onlineData {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: #F7F8FA;
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  &>.card:nth-child(1) {
+    flex: 4
+  }
+
+  &>.card:nth-child(2) {
+    flex: 4
+  }
+
+  &>.card:nth-child(3) {
+    flex: 3
+  }
+
+  .item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    .title {
+      flex: 1;
+    }
+
+    .value {
+      font-weight: bold;
+      flex: 1;
+      text-align: right;
+    }
+
+    .unit {
+      text-align: right;
+      width: 60px;
+    }
+  }
+}

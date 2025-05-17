@@ -7,7 +7,7 @@ import Routes from './routes'
 const App: React.FC = () => {
   return (
     <React.Suspense>
-      <ConfigProvider locale={zhCN} componentSize="middle" theme={{ token: { colorPrimary: '#1677ff' } }}>
+      <ConfigProvider locale={zhCN} componentSize="middle" theme={{ token: { colorPrimary: '#165DFF' } }}>
         <BrowserRouter>
           <Routes />
         </BrowserRouter>

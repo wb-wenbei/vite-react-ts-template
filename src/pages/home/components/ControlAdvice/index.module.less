@@ -1,0 +1,30 @@
+.advice {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &>.item:not(:last-child) {
+    border-bottom: 1px solid #E8E8E8;
+  }
+
+  .item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    .title {
+      flex: 1;
+    }
+
+    .value {
+      font-weight: bold;
+      flex: 1;
+      text-align: right;
+    }
+
+    .unit {
+      text-align: right;
+      width: 60px;
+    }
+  }
+}

@@ -1,0 +1,54 @@
+.analysis {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 16px;
+
+  .countCard {
+    padding: 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+
+    .content {
+      margin-bottom: 12px;
+
+      .value {
+        font-size: 24px;
+        margin-right: 4px;
+      }
+    }
+
+    &.success {
+      background: #E8FFEA;
+
+      .value {
+        color: #00B42A;
+      }
+    }
+
+    &.info {
+      background: #E8F3FF;
+
+      .value {
+        color: #3491FA;
+      }
+    }
+
+    &.warning {
+      background: #FDF4BF;
+
+      .value {
+        color: #CC9213;
+      }
+    }
+
+    &.error {
+      background: #FDDDC3;
+
+      .value {
+        color: #CC5120;
+      }
+    }
+  }
+}

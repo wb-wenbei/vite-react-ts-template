@@ -15,6 +15,7 @@ const App: React.FC = () => {
   const { token, setToken, setUserInfo, setCustomerId, clear } = useUserStore()
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+
   const remember = localStorage.getItem('remember') === 'true'
 
   const onLogin = async (values: LoginInfo) => {

@@ -4,10 +4,12 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 interface SystemStore {
   companyInfo?: CompanyInfo
   setCompanyInfo: (companyInfo: CompanyInfo) => void
+  device?: Device
+  setDevice: (device: Device) => void
 }
 
 // Only persist these keys
-const persistKeys: string[] = ['companyInfo']
+const persistKeys: string[] = ['companyInfo', 'device']
 
 const useSystemStore = create<SystemStore>()(
   persist(
@@ -15,6 +17,10 @@ const useSystemStore = create<SystemStore>()(
       companyInfo: undefined,
       setCompanyInfo: (companyInfo: CompanyInfo) => {
         set({ companyInfo })
+      },
+      device: undefined,
+      setDevice: (device: Device) => {
+        set({ device })
       },
     }),
     {

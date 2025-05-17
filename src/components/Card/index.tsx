@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './index.module.less'
-import SvgIcon from '../Icon'
+import manage from '@/assets/icons/manage.png'
 
 type Props = {
   title?: string
@@ -12,7 +12,7 @@ const App: React.FC<Props> = (props) => {
   return (
     <div className={style.card}>
       <div className={style.header}>
-        <SvgIcon name="manage" />
+        <img src={manage} alt="" />
         <div>{title}</div>
       </div>
       <div className={style.content}>{children}</div>

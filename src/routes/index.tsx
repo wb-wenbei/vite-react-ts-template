@@ -9,6 +9,7 @@ const Error404 = lazy(() => import('@/pages/error/404'))
 const Login = lazy(() => import('@/pages/login'))
 const Home = lazy(() => import('@/pages/home'))
 const Analysis = lazy(() => import('@/pages/analysis'))
+const Quota = lazy(() => import('@/pages/quota'))
 
 const routes: RouteObject[] = [
   {
@@ -29,6 +30,10 @@ const routes: RouteObject[] = [
       {
         path: 'analysis',
         element: <Analysis />,
+      },
+      {
+        path: 'quota',
+        element: <Quota />,
       },
     ],
   },

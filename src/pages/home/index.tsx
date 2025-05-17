@@ -1,67 +1,55 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ThreeModel from '@/components/ThreeModel'
 import Card from '@/components/Card'
-import CountCard from '@/components/CountCard'
 import style from './index.module.less'
-import { getCustomerDevices } from '@/apis'
+import { getCustomerDevices, getDeviceAttributes, getLatestDeviceTimeseries } from '@/apis'
 import useUserStore from '@/stores/user'
+import useSystemStore from '@/stores/system'
+import RunEfficiency from './components/RunEfficiency'
+import OnlineData from './components/OnlineData'
+import ControlAdvice from './components/ControlAdvice'
+import ScreenControl from './components/ScreenControl'
 
 const App: React.FC = () => {
   const { customerId } = useUserStore()
-
-  const [list, setList] = useState([
-    {
-      title: '系统上线时间',
-      value: 40,
-      unit: '天',
-      type: 'success',
-    },
-    {
-      title: '累计节省电耗',
-      value: 46944,
-      unit: 'kwh/m³',
-      type: 'warning',
-    },
-    {
-      title: '累计节省药耗',
-      value: 97,
-      unit: 'mg/m³',
-      type: 'info',
-    },
-    {
-      title: '累计减少污泥量',
-      value: 10944,
-      unit: 'kg',
-      type: 'error',
-    },
-  ])
+  const { setDevice } = useSystemStore()
 
   useEffect(() => {
-    const loadData = () => {
+    const loadDevices = (customerId?: string) => {
+      if (!customerId) return
+
       getCustomerDevices({ page: 1, pageSize: 10, customerId: customerId }).then((res) => {
-        console.log('getCustomerDevices', res)
-        setList((prev) => prev)
+        const device = res.data[0]
+        setDevice(device)
+
+        loadAttributes(device?.id?.id)
       })
     }
 
-    loadData()
-  }, [customerId])
+    const loadAttributes = (deviceId?: string) => {
+      if (!deviceId) return
+
+      getDeviceAttributes(deviceId).then((res) => {
+        console.log('设备属性', res)
+      })
+
+      getLatestDeviceTimeseries(deviceId).then((res) => {
+        console.log('设备最新数据', res)
+      })
+    }
+
+    loadDevices(customerId)
+  }, [customerId, setDevice])
 
   return (
     <div className={style.home}>
-      <Card title="运行能效分析">
-        <div className={style.analysis}>
-          {list.map((item, index) => (
-            <CountCard key={index} title={item.title} value={item.value} unit={item.unit} type={item.type} />
-          ))}
-        </div>
-      </Card>
-      <Card title="在线数据"></Card>
+      <RunEfficiency />
+      <OnlineData />
       <Card title="运行概览">
         <ThreeModel />
       </Card>
-      <Card title="控制建议"></Card>
-      <Card title="筛分控制"></Card>
+      <ControlAdvice />
+      <ScreenControl />
     </div>
   )
 }

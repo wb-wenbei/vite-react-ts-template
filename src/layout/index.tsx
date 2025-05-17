@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router'
-import { Avatar, Dropdown, Menu, Space } from 'antd'
+import { Avatar, Dropdown, Menu } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import styles from './index.module.less'
@@ -20,6 +20,10 @@ const App: React.FC = () => {
     {
       key: '/analysis',
       label: `效果分析`,
+    },
+    {
+      key: '/quota',
+      label: `指标数据`,
     },
   ]
 
@@ -57,12 +61,12 @@ const App: React.FC = () => {
           <div>系统名称</div>
           <div>系统子名称</div>
         </div>
-        <Space size="middle">
+        <div className={styles.actions}>
           <Menu selectedKeys={[activeMenu]} theme="dark" mode="horizontal" items={menuItems} onClick={menuClick} />
           <Dropdown menu={{ items: userItems, onClick: actionClick }} trigger={['click']}>
             <Avatar icon={<UserOutlined />} />
           </Dropdown>
-        </Space>
+        </div>
       </div>
       <div className={styles.content}>
         <Outlet />
