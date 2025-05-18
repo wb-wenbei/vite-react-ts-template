@@ -11,7 +11,7 @@ type Props = {
   option?: OptionType
 }
 
-const App: React.FC<Props> = (props) => {
+const ChartCard: React.FC<Props> = (props) => {
   const { title, option } = props
   const [fullScreen, setFullScreen] = React.useState(false)
   const [messageApi, contextHolder] = message.useMessage()
@@ -49,4 +49,4 @@ const App: React.FC<Props> = (props) => {
   )
 }
 
-export default App
+export default ChartCard

@@ -8,7 +8,7 @@ type Props = {
   noMerge?: boolean
 }
 
-const App: React.FC<Props> = ({ option, noMerge = true }) => {
+const Chart: React.FC<Props> = ({ option, noMerge = true }) => {
   const chartRef = useRef<HTMLDivElement>(null)
   const chartInstance = useRef<echarts.ECharts | null>(null) // 用于存储实例
 
@@ -65,4 +65,4 @@ const App: React.FC<Props> = ({ option, noMerge = true }) => {
   return <div ref={chartRef} style={{ width: '100%', height: '100%', flex: 1 }}></div>
 }
 
-export default App
+export default Chart

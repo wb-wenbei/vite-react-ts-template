@@ -18,12 +18,12 @@ export const getCustomerDevices = (data: PageParams<{ customerId: string }>) => 
 
 // 获取设备属性
 export const getDeviceAttributes = (entityId: string, keys = '', entityType = 'DEVICE') => {
-  return get<Record<string, unknown>>(`/api/plugins/telemetry/${entityType}/${entityId}/values/attributes`, { keys })
+  return get<DeviceAttribute[]>(`/api/plugins/telemetry/${entityType}/${entityId}/values/attributes`, { keys })
 }
 
 // 查询指定区间的历史数据
 export const getDeviceTimeseries = (entityId: string, params: DeviceTimeserieQuery, entityType = 'DEVICE') => {
-  return get<DeviceTimeserie>(`/api/plugins/telemetry/${entityType}/${entityId}/values/timeseries`, params)
+  return get<DeviceTimeserie[]>(`/api/plugins/telemetry/${entityType}/${entityId}/values/timeseries`, params)
 }
 
 // 获取最新的历史数据

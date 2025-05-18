@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 let renderer: THREE.WebGLRenderer
 
-const App: React.FC = () => {
+const ThreeModel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -17,21 +17,25 @@ const App: React.FC = () => {
     const scene = new THREE.Scene()
 
     // 创建相机
-    const camera = new THREE.PerspectiveCamera(75, clientWidth / clientHeight, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(75, clientWidth / clientHeight, 0.1, 500)
     camera.position.z = 5
 
     // 创建渲染器
-    renderer = new THREE.WebGLRenderer()
+    renderer = new THREE.WebGLRenderer({
+      antialias: true, // 抗锯齿
+      logarithmicDepthBuffer: true, // 启用对数深度缓冲
+    })
     renderer.setSize(clientWidth, clientHeight)
+    renderer.setClearColor(0xffffff) // 设置背景颜色
     containerRef.current.appendChild(renderer.domElement)
 
     // 添加光源
-    const ambientLight = new THREE.AmbientLight(0x404040) // 环境光
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.5) // 环境光
     scene.add(ambientLight)
 
     // 创建平行光
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
-    directionalLight.position.set(5, 2, 5)
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 2) // 强度从 1 提高到 2
+    directionalLight.position.set(5, 30, 5) // 提高光源 Y 位置，减少阴影遮挡
     scene.add(directionalLight)
 
     // 加载模型
@@ -80,4 +84,4 @@ const App: React.FC = () => {
   return <div ref={containerRef} style={{ width: '100%', height: '100%', overflow: 'hidden' }} />
 }
 
-export default App
+export default ThreeModel

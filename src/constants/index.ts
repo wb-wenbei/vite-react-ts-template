@@ -34,25 +34,25 @@ export const RUN_DATA_LIST: DataItem[] = [
 
 export const ONLINE_DATA_IN_LIST: DataItem[] = [
   {
-    key: 'cod',
+    key: 'influent_COD',
     title: '进水COD',
     unit: 'mg/L',
     value: 0,
   },
   {
-    key: 'tn',
+    key: 'influent_TN',
     title: '进水TN',
     unit: 'mg/L',
     value: 0,
   },
   {
-    key: 'tp',
+    key: 'influent_TP',
     title: '进水TP',
     unit: 'mg/L',
     value: 0,
   },
   {
-    key: 'nh3',
+    key: 'influent_NH',
     title: '进水氨氮',
     unit: 'mg/L',
     value: 0,
@@ -61,25 +61,25 @@ export const ONLINE_DATA_IN_LIST: DataItem[] = [
 
 export const ONLINE_DATA_OUT_LIST: DataItem[] = [
   {
-    key: 'cod',
+    key: 'effluent_COD',
     title: '出水COD',
     unit: 'mg/L',
     value: 0,
   },
   {
-    key: 'tn',
+    key: 'effluent_TN',
     title: '出水TN',
     unit: 'mg/L',
     value: 0,
   },
   {
-    key: 'tp',
+    key: 'effluent_TP',
     title: '出水TP',
     unit: 'mg/L',
     value: 0,
   },
   {
-    key: 'nh3',
+    key: 'effluent_NH',
     title: '出水氨氮',
     unit: 'mg/L',
     value: 0,
@@ -88,19 +88,19 @@ export const ONLINE_DATA_OUT_LIST: DataItem[] = [
 
 export const ONLINE_DATA_OTHER_LIST: DataItem[] = [
   {
-    key: 'do',
+    key: 'Aerobic_DO',
     title: '生物池末端DO',
     unit: 'mg/L',
     value: 0,
   },
   {
-    key: 'mlss',
-    title: 'MLSS',
+    key: 'Aerobic_MLSS',
+    title: '生物池MLSS',
     unit: 'mg/L',
     value: 0,
   },
   {
-    key: 'sv30',
+    key: 'SV30',
     title: 'SV30',
     unit: '%',
     value: 0,
@@ -110,7 +110,7 @@ export const ONLINE_DATA_OTHER_LIST: DataItem[] = [
 export const ONLINE_DATA_IN_EXTRA_LIST = [
   ...ONLINE_DATA_IN_LIST,
   {
-    key: 'jinshui',
+    key: 'influent_flow',
     title: '进水流量',
     value: 2.56,
     unit: 'm³/d',
@@ -139,7 +139,7 @@ export const ADVICES_DATA_LIST: DataItem[] = [
     unit: '-',
   },
   {
-    key: 'wu',
+    key: 'Sludge_sieve',
     title: '污泥筛分时间',
     value: 2.56,
     unit: 'mg/L',
@@ -148,19 +148,19 @@ export const ADVICES_DATA_LIST: DataItem[] = [
 
 export const CONSUME_DATA_LIST: DataItem[] = [
   {
-    key: 'e',
+    key: 'power_consumption',
     title: '电耗',
     value: 2.56,
     unit: 'kwh/m³',
   },
   {
-    key: 'y',
+    key: 'chemical_consumption',
     title: '药耗',
     value: 2.56,
     unit: 'mg/L',
   },
   {
-    key: 's',
+    key: 'excess_sludge_reduction',
     title: '剩余污泥量',
     value: 2.56,
     unit: 'mg/L',
@@ -171,3 +171,11 @@ export const RUN_STATUS_OPTIONS = [
   { label: '启动', value: 'open' },
   { label: '关闭', value: 'close' },
 ]
+
+export const INFLUENT_TYPES = ['influent_COD', 'influent_TN', 'influent_TP', 'influent_NH']
+
+export const EFFLUENT_TYPES = ['effluent_COD', 'effluent_TN', 'effluent_TP', 'effluent_NH']
+
+export const AEROBIC_TYPES = ['Aerobic_DO', 'Aerobic_MLSS', 'SV30']
+
+export const ONLINE_LIST = [INFLUENT_TYPES, EFFLUENT_TYPES, AEROBIC_TYPES]

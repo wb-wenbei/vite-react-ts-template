@@ -7,7 +7,7 @@ type Props = {
   children?: React.ReactNode
 }
 
-const App: React.FC<Props> = (props) => {
+const Card: React.FC<Props> = (props) => {
   const { title, children } = props
   return (
     <div className={style.card}>
@@ -20,4 +20,4 @@ const App: React.FC<Props> = (props) => {
   )
 }
 
-export default App
+export default Card

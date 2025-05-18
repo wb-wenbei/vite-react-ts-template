@@ -40,6 +40,9 @@ interface Device {
   type?: string
   version?: number
   additionalInfo?: Record<string, unknown>
+  attributeList?: DeviceAttribute[]
+  latestTimeserie?: DeviceTimeserie
+  hisTimeserieList?: DeviceTimeserie[]
 }
 
 interface DeviceData {
@@ -71,11 +74,17 @@ interface TransportConfiguration {
   username?: string
 }
 
+interface DeviceAttribute {
+  key: string
+  lastUpdateTs: number
+  value: number | string | boolean
+}
+
 interface DeviceTimeserie {
   [key: string]: {
     ts: number
-    value: string
-  }[]
+    value: string | number | boolean
+  }
 }
 
 enum Agg {

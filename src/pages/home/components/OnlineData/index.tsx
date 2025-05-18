@@ -2,18 +2,17 @@ import React, { useMemo } from 'react'
 import Card from '@/components/Card'
 import { ONLINE_DATA_LIST } from '@/constants'
 import style from './index.module.less'
+import useSystemStore from '@/stores/system'
+import { updateOptionsValues } from '@/utils'
 
-type Props = {
-  data?: unknown
-}
-
-const OnlineData: React.FC<Props> = (props) => {
-  const { data } = props
+const OnlineData: React.FC = () => {
+  const { deviceList } = useSystemStore()
 
   const dataList = useMemo(() => {
-    console.log('data', data)
-    return ONLINE_DATA_LIST
-  }, [data])
+    return ONLINE_DATA_LIST.map((options) => {
+      return updateOptionsValues(deviceList, options)
+    })
+  }, [deviceList])
 
   return (
     <Card title="在线数据">

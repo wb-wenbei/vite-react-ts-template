@@ -9,7 +9,7 @@ import useUserStore from '@/stores/user'
 const App: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
-  const { clear } = useUserStore()
+  const { clear, userInfo } = useUserStore()
   const activeMenu = location.pathname
 
   const menuItems: MenuProps['items'] = [
@@ -41,7 +41,7 @@ const App: React.FC = () => {
   const userItems: MenuProps['items'] = [
     {
       key: 'user',
-      label: 'username',
+      label: userInfo?.name || '用户',
       disabled: true,
     },
     {
@@ -58,8 +58,9 @@ const App: React.FC = () => {
       <div className={styles.header}>
         <div className={styles.title}>
           <div>icon</div>
-          <div>系统名称</div>
-          <div>系统子名称</div>
+          <div>企业名称</div>
+          <div></div>
+          <div>测流式生物倍增反应系统</div>
         </div>
         <div className={styles.actions}>
           <Menu selectedKeys={[activeMenu]} theme="dark" mode="horizontal" items={menuItems} onClick={menuClick} />

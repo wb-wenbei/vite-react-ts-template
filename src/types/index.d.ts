@@ -49,3 +49,10 @@ interface CompanyInfo {
   logo: string
   bgImg: string
 }
+
+interface OptionItem {
+  key: string
+  title: string
+  value: number
+  unit: string
+}
