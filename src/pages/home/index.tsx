@@ -14,7 +14,7 @@ let loading = false
 const App: React.FC = () => {
   const { customerId } = useUserStore()
   const [devices, setDevices] = useState<Device[]>([])
-  const { setDeviceList } = useSystemStore()
+  const { setDeviceList, updateDeviceInfo } = useSystemStore()
 
   useEffect(() => {
     if (loading) return
@@ -71,8 +71,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     setDeviceList(devices)
-    console.log('设备列表更新', devices)
   }, [devices, setDeviceList])
+
+  useEffect(() => {
+    updateDeviceInfo()
+  }, [updateDeviceInfo])
 
   return (
     <div className={style.home}>

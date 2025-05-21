@@ -1,17 +1,34 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Card from '@/components/Card'
 import style from './index.module.less'
 import { ADVICES_DATA_LIST } from '@/constants'
+import { getControlAdviceInfo } from '@/apis'
+import { getLatestDeviceTimeserieByKey } from '@/utils'
 
-type Props = { data?: unknown }
-
-const ControlAdvice: React.FC<Props> = (props) => {
-  const { data } = props
+const ControlAdvice: React.FC = () => {
+  const [info, setInfo] = useState<DeviceTimeserie>({})
 
   const dataList = useMemo(() => {
-    console.log('data', data)
-    return ADVICES_DATA_LIST
-  }, [data])
+    return ADVICES_DATA_LIST.map((item) => {
+      const value = getLatestDeviceTimeserieByKey(item.key, info)
+      return {
+        ...item,
+        value: value,
+      }
+    })
+  }, [info])
+
+  useEffect(() => {
+    const loadData = () => {
+      getControlAdviceInfo().then((res) => {
+        setInfo(res)
+
+        console.log('控制建议信息', res)
+      })
+    }
+
+    loadData()
+  }, [])
 
   return (
     <Card title="控制建议">

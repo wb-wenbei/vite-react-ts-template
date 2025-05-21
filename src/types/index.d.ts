@@ -44,10 +44,14 @@ interface User {
   phone: number
 }
 
-interface CompanyInfo {
-  title: string
-  logo: string
-  bgImg: string
+interface SystemInfo {
+  company_name?: string
+  background_image_url?: string
+  icon_url?: string
+  saved_energy?: number
+  saved_chemical_medicine?: string
+  sludge_reduction?: number
+  up_time?: number
 }
 
 interface OptionItem {
@@ -55,4 +59,9 @@ interface OptionItem {
   title: string
   value: number
   unit: string
+}
+
+interface InfoItem {
+  key: string
+  value: string
 }

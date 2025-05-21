@@ -37,8 +37,6 @@ const App: React.FC = () => {
     const start = dayjs(timeRange[0]).format(timeStartFormat)
     const end = dayjs(timeRange[1]).format(timeEndFormat)
 
-    console.log('currentTimeRange', start, end)
-
     return [start, end]
   }, [timeRange, timeType])
 
@@ -83,8 +81,8 @@ const App: React.FC = () => {
         </div>
       </div>
       {current === '出水水质' && <WaterQuality timeRange={currentTimeRange} />}
-      {current === '生化区能耗' && <Energy />}
-      {current === '运行数据' && <RunData />}
+      {current === '生化区能耗' && <Energy timeRange={currentTimeRange} />}
+      {current === '运行数据' && <RunData timeRange={currentTimeRange} />}
     </div>
   )
 }

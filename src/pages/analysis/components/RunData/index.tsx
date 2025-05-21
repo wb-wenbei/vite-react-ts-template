@@ -2,7 +2,9 @@ import React from 'react'
 import ChartCard from '@/components/ChartCard'
 import style from './index.module.less'
 
-type Props = { data?: unknown }
+type Props = {
+  timeRange: string[]
+}
 
 const options = {
   xAxis: {
@@ -21,9 +23,8 @@ const options = {
   ],
 } as echarts.EChartsOption
 
-const RunData: React.FC<Props> = (props) => {
-  const { data } = props
-  console.log('WaterQuality', data)
+const RunData: React.FC<Props> = ({ timeRange }) => {
+  console.log('WaterQuality', timeRange)
   return (
     <div className={style.content}>
       <ChartCard option={options} />

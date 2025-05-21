@@ -1,4 +1,5 @@
 import type { DataItem } from '@/constants'
+import { string } from 'three/tsl'
 
 // 根据设备类型types获取设备选项列表
 export function getOptionsByDeviceTypes(deviceList: Device[], types: string[]) {
@@ -33,4 +34,20 @@ export function updateOptionsValues(deviceList: Device[], options: DataItem[]) {
     }
     return option
   })
+}
+
+export function getLatestDeviceTimeserieByKey(key: string, data: DeviceTimeserie = {}) {
+  if (!key || !data || !data[key] || !data[key].length) return ''
+
+  const value = data[key][0].value
+
+  switch (key) {
+    case 'SludgeScreeningTime': {
+      const { StartTime, StopTime } = (JSON.parse(value as string)[0] || {}) as { StartTime: number; StopTime: number }
+      return ((StopTime - StartTime) / (1000 * 60)).toFixed(2)
+    }
+
+    default:
+      return value
+  }
 }

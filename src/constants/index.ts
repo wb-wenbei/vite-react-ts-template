@@ -1,3 +1,5 @@
+export const ENTITY_TYPE = 'ASSET'
+
 export interface DataItem {
   key: string
   title: string
@@ -121,28 +123,28 @@ export const ONLINE_DATA_LIST = [ONLINE_DATA_IN_LIST, ONLINE_DATA_OUT_LIST, ONLI
 
 export const ADVICES_DATA_LIST: DataItem[] = [
   {
-    key: 'do',
+    key: 'DoControl',
     title: 'DO控制建议',
-    value: 2.56,
+    value: 0,
     unit: 'mg/L',
   },
   {
-    key: 'c',
+    key: 'CarbonCtrl',
     title: '碳源投加',
-    value: 2.56,
+    value: 0,
     unit: 'mg/L',
   },
   {
-    key: 'nei',
+    key: 'InjectionOfInternalRefluxBacteria',
     title: '内回流菌种投加',
-    value: 2.56,
+    value: 0,
     unit: '-',
   },
   {
-    key: 'Sludge_sieve',
+    key: 'SludgeScreeningTime',
     title: '污泥筛分时间',
-    value: 2.56,
-    unit: 'mg/L',
+    value: 0,
+    unit: '小时',
   },
 ]
 

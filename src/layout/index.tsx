@@ -5,11 +5,13 @@ import { UserOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import styles from './index.module.less'
 import useUserStore from '@/stores/user'
+import useSystemStore from '@/stores/system'
 
 const App: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { clear, userInfo } = useUserStore()
+  const { systemInfo } = useSystemStore()
   const activeMenu = location.pathname
 
   const menuItems: MenuProps['items'] = [
@@ -57,8 +59,8 @@ const App: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.title}>
-          <div>icon</div>
-          <div>企业名称</div>
+          {systemInfo?.icon_url && <img src={systemInfo?.icon_url} alt="" />}
+          <div>{systemInfo?.company_name}</div>
           <div></div>
           <div>测流式生物倍增反应系统</div>
         </div>

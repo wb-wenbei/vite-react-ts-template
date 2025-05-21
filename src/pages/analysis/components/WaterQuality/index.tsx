@@ -1,7 +1,9 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ChartCard from '@/components/ChartCard'
 import style from './index.module.less'
 import { ONLINE_DATA_OUT_LIST } from '@/constants'
+import useSystemStore from '@/stores/system'
+import { getDeviceTimeseries } from '@/apis'
 
 type Props = {
   timeRange: string[]
@@ -9,6 +11,10 @@ type Props = {
 
 const WaterQuality: React.FC<Props> = ({ timeRange }) => {
   console.log('WaterQuality', timeRange)
+  const { deviceList } = useSystemStore()
+  const [xAxisData, setXAxisData] = useState<number[]>([])
+  const [yAxisData, setYAxisData] = useState<number[]>([])
+
   const chartList = useMemo(() => {
     return ONLINE_DATA_OUT_LIST.map((item) => {
       return {
@@ -28,7 +34,7 @@ const WaterQuality: React.FC<Props> = ({ timeRange }) => {
           },
           xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: xAxisData || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           },
           yAxis: {
             name: item.unit,
@@ -36,7 +42,7 @@ const WaterQuality: React.FC<Props> = ({ timeRange }) => {
           },
           series: [
             {
-              data: [820, 932, 901, 934, 1290, 1330, 1320],
+              data: yAxisData || [820, 932, 901, 934, 1290, 1330, 1320],
               type: 'line',
               smooth: true,
             },
@@ -44,7 +50,31 @@ const WaterQuality: React.FC<Props> = ({ timeRange }) => {
         } as echarts.EChartsOption,
       }
     })
-  }, [])
+  }, [xAxisData, yAxisData])
+
+  useEffect(() => {
+    const loadData = (timeRange: string[]) => {
+      console.log('loadData', timeRange)
+      ONLINE_DATA_OUT_LIST.forEach((item) => {
+        const device = deviceList.find((device) => device.type === item.key)
+
+        if (device?.id?.id && device.type) {
+          const startTs = new Date(timeRange[0]).getTime()
+          const endTs = new Date(timeRange[1]).getTime()
+          getDeviceTimeseries(device.id.id, { keys: device.type, startTs, endTs }).then((res) => {
+            console.log('getDeviceTimeseries', res?.value || [])
+            const list = res?.value || []
+            const xAxisData = list.map((item) => item.ts)
+            setXAxisData(xAxisData)
+            const yAxisData = list.map((item) => item.value as number)
+            setYAxisData(yAxisData)
+          })
+        }
+      })
+    }
+
+    loadData(timeRange)
+  }, [timeRange, deviceList])
 
   return (
     <div className={style.content}>

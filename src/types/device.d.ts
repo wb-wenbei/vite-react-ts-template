@@ -84,7 +84,7 @@ interface DeviceTimeserie {
   [key: string]: {
     ts: number
     value: string | number | boolean
-  }
+  }[]
 }
 
 enum Agg {
@@ -125,4 +125,11 @@ interface DeviceTimeserieQuery {
 interface LatestDeviceTimeserieQuery {
   keys?: string
   useStrictDataTypes?: boolean
+}
+
+interface DeviceInfo {
+  client: {
+    UpTime: number
+    Running: boolean
+  }
 }
