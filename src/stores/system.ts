@@ -28,7 +28,7 @@ const useSystemStore = create<SystemStore>()(
         if (company_name === 'undefined') company_name = ''
         if (background_image_url === 'undefined') background_image_url = ''
 
-        set({ systemInfo: { icon_url, company_name, background_image_url } })
+        set({ systemInfo: { icon_url, company_name, background_image_url } as SystemInfo })
       },
       deviceList: [],
       setDeviceList: (deviceList: Device[]) => {

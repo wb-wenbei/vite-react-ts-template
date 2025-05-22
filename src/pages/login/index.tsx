@@ -14,7 +14,7 @@ interface LoginInfo {
 
 const App: React.FC = () => {
   const { token, setToken, setUserInfo, setCustomerId, clear } = useUserStore()
-  const { systemInfo, updateDeviceInfo } = useSystemStore()
+  const { systemInfo, updateSystemInfo } = useSystemStore()
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -45,10 +45,10 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    updateDeviceInfo()
+    updateSystemInfo()
 
     if (token) navigate('/')
-  }, [token, navigate, updateDeviceInfo])
+  }, [token, navigate, updateSystemInfo])
 
   return (
     <div
