@@ -5,13 +5,9 @@ import { InputNumber, Radio, Segmented, Space } from 'antd'
 import SvgIcon from '@/components/Icon'
 import { RUN_STATUS_OPTIONS } from '@/constants'
 
-type Props = { data?: unknown }
-
-const ScreenControl: React.FC<Props> = (props) => {
-  const { data } = props
+const ScreenControl: React.FC = () => {
   const [mode, setMode] = useState('auto')
   const [manualStatus, setManualStatus] = useState('open')
-  console.log('筛分控制', data)
 
   const modeOptions = [
     {

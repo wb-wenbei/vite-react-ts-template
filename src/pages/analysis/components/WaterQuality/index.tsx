@@ -10,7 +10,6 @@ type Props = {
 }
 
 const WaterQuality: React.FC<Props> = ({ timeRange }) => {
-  console.log('WaterQuality', timeRange)
   const { deviceList } = useSystemStore()
   const [xAxisData, setXAxisData] = useState<number[]>([])
   const [yAxisData, setYAxisData] = useState<number[]>([])
@@ -54,7 +53,6 @@ const WaterQuality: React.FC<Props> = ({ timeRange }) => {
 
   useEffect(() => {
     const loadData = (timeRange: string[]) => {
-      console.log('loadData', timeRange)
       ONLINE_DATA_OUT_LIST.forEach((item) => {
         const device = deviceList.find((device) => device.type === item.key)
 
@@ -62,7 +60,6 @@ const WaterQuality: React.FC<Props> = ({ timeRange }) => {
           const startTs = new Date(timeRange[0]).getTime()
           const endTs = new Date(timeRange[1]).getTime()
           getDeviceTimeseries(device.id.id, { keys: device.type, startTs, endTs }).then((res) => {
-            console.log('getDeviceTimeseries', res?.value || [])
             const list = res?.value || []
             const xAxisData = list.map((item) => item.ts)
             setXAxisData(xAxisData)

@@ -63,5 +63,5 @@ interface OptionItem {
 
 interface InfoItem {
   key: string
-  value: string
+  value: string | number
 }

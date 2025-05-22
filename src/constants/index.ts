@@ -9,25 +9,25 @@ export interface DataItem {
 
 export const RUN_DATA_LIST: DataItem[] = [
   {
-    key: 'onlineTime',
+    key: 'up_time',
     title: '系统上线时间',
     value: 40,
     unit: '天',
   },
   {
-    key: 'energySaving',
+    key: 'saved_energy',
     title: '累计节省电耗',
     value: 46944,
     unit: 'kwh/m³',
   },
   {
-    key: 'drugSaving',
+    key: 'saved_chemical_medicine',
     title: '累计节省药耗',
     value: 97,
     unit: 'mg/m³',
   },
   {
-    key: 'sludgeReduction',
+    key: 'sludge_reduction',
     title: '累计减少污泥量',
     value: 10944,
     unit: 'kg',
@@ -168,6 +168,35 @@ export const CONSUME_DATA_LIST: DataItem[] = [
     unit: 'mg/L',
   },
 ]
+
+export const CHART_RUN_DATA_LIST: DataItem[] = [
+  {
+    key: 'SV30',
+    title: '污泥SV30',
+    unit: '%',
+    value: 0,
+  },
+  {
+    key: 'SludgeScreeningTime',
+    title: '筛分器开启时间',
+    value: 0,
+    unit: '小时',
+  },
+]
+
+export const CONTROL_ADVICE: DataItem = {
+  key: 'no_data_upload',
+  title: '控制建议',
+  value: 0,
+  unit: '',
+}
+
+export const SLUDEG_SIEVE_LIST: DataItem = {
+  key: 'Sludge_sieve',
+  title: '筛分器',
+  value: 0,
+  unit: '',
+}
 
 export const RUN_STATUS_OPTIONS = [
   { label: '启动', value: 'open' },

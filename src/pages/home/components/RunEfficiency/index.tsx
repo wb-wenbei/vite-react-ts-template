@@ -1,27 +1,37 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Card from '@/components/Card'
 import style from './index.module.less'
 import { RUN_DATA_LIST } from '@/constants'
-
-type Props = {
-  data?: unknown
-}
+import { getSystemInfo } from '@/apis'
+import { getTimesToNow } from '@/utils'
 
 const types = ['success', 'warning', 'info', 'error']
 
-const RunEfficiency: React.FC<Props> = (props) => {
-  const { data } = props
+const RunEfficiency: React.FC = () => {
+  const [data, setData] = useState<InfoItem[]>([])
 
   const dataList = useMemo(() => {
-    console.log('data', data)
     return RUN_DATA_LIST.map((item) => {
-      // const value = data?.[item.key] ?? item.value
-      return {
-        ...item,
-        // value,
-      }
+      const infoItem = data.find((i) => i.key === item.key)
+
+      if (!infoItem) return { ...item, value: '--' }
+
+      let value = infoItem?.value
+      // 系统上线时间是一个时间戳，转换为距当前时间的天数
+      if (item.key === 'up_time') value = getTimesToNow(value as number) as string
+      return { ...item, value }
     })
   }, [data])
+
+  useEffect(() => {
+    const loadData = () => {
+      getSystemInfo().then((res) => {
+        setData(res || {})
+      })
+    }
+
+    loadData()
+  }, [])
 
   return (
     <Card title="运行能效分析">

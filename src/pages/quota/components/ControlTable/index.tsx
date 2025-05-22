@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Checkbox, InputNumber, Table } from 'antd'
+import { Button, Checkbox, InputNumber, Table, message } from 'antd'
 import style from './index.module.less'
+import { saveDeviceAttributes } from '@/apis'
 
-type DataItem = {
+export type DataItem = {
   key: string
   metric: string
   manual: boolean
@@ -10,6 +11,7 @@ type DataItem = {
   value: number
   valueInput?: number | null
   unit: string
+  entityId?: string
 }
 
 type Props = {
@@ -18,6 +20,7 @@ type Props = {
 
 const ControlTable: React.FC<Props> = ({ data }) => {
   const [dataSource, setDataSource] = useState<DataItem[]>([])
+  const [messageApi, contextHolder] = message.useMessage()
 
   const columns = [
     {
@@ -85,7 +88,20 @@ const ControlTable: React.FC<Props> = ({ data }) => {
   }
 
   const onSubmit = (record: DataItem) => {
-    console.log('提交数据:', record)
+    const { entityId, key, valueInput } = record
+    if (!entityId || !key) return
+
+    saveDeviceAttributes(entityId, { [key]: valueInput }).then(() => {
+      messageApi.success('保存成功')
+      setDataSource((prev) => {
+        return (prev || []).map((item) => {
+          if (item.key === record.key) {
+            return { ...item, value: valueInput, manualInput: false } as DataItem
+          }
+          return item
+        })
+      })
+    })
   }
 
   useEffect(() => {
@@ -93,9 +109,12 @@ const ControlTable: React.FC<Props> = ({ data }) => {
   }, [data])
 
   return (
-    <div className={style.controlTable}>
-      <Table rowKey="metric" dataSource={dataSource} columns={columns} pagination={false} />
-    </div>
+    <>
+      {contextHolder}
+      <div className={style.controlTable}>
+        <Table rowKey="metric" dataSource={dataSource} columns={columns} pagination={false} />
+      </div>
+    </>
   )
 }
 

@@ -1,5 +1,13 @@
 import { get, post } from '@/request/https'
 
+// 获取企业信息
+export const getBrandInfo = (
+  tenantId = '71627260-314f-11f0-859f-c724664784c1',
+  assetId = 'eda30040-3151-11f0-859f-c724664784c1'
+) => {
+  return get<InfoItem[]>(`api/noauth/asset/brandinfo/${tenantId}/${assetId}`)
+}
+
 // 用户登录
 export const login = (username: string, password: string) => {
   return post<LoginRes>('/api/auth/login', { username, password })
@@ -8,6 +16,11 @@ export const login = (username: string, password: string) => {
 // 获取用户信息
 export const authUser = () => {
   return get<User>('/api/auth/user')
+}
+
+// 获取设备运行状态
+export const getDeviceInfo = (deviceToken = 'ezQAEoPxlgVUUTvkJ2R3', clientKeys = 'UpTime,Running') => {
+  return get<DeviceInfo>(`/api/v1/${deviceToken}/attributes`, { clientKeys })
 }
 
 // 获取设备列表
@@ -19,6 +32,15 @@ export const getCustomerDevices = (data: PageParams<{ customerId: string }>) => 
 // 获取设备属性
 export const getDeviceAttributes = (entityId: string, keys = '', entityType = 'DEVICE') => {
   return get<DeviceAttribute[]>(`/api/plugins/telemetry/${entityType}/${entityId}/values/attributes`, { keys })
+}
+
+// 获取系统信息
+export const getSystemInfo = (
+  entityId = 'eda30040-3151-11f0-859f-c724664784c1',
+  entityType = 'ASSET',
+  scope = 'SERVER_SCOPE'
+) => {
+  return get<InfoItem[]>(`/api/plugins/telemetry/${entityType}/${entityId}/values/attributes/${scope}`)
 }
 
 // 查询指定区间的历史数据
@@ -40,34 +62,12 @@ export const saveDeviceAttributes = (
   entityId: string,
   data: Record<string, unknown>,
   entityType = 'DEVICE',
-  scope?: number
+  scope = 'ANY'
 ) => {
   return post(`/api/plugins/telemetry/${entityType}/${entityId}/timeseries/${scope}`, data)
 }
 
-// 获取企业信息
-export const getBrandInfo = (
-  tenantId = '71627260-314f-11f0-859f-c724664784c1',
-  assetId = 'eda30040-3151-11f0-859f-c724664784c1'
-) => {
-  return get<InfoItem[]>(`api/noauth/asset/brandinfo/${tenantId}/${assetId}`)
-}
-
-// 获取系统信息
-export const getSystemInfo = (
-  entityId = 'eda30040-3151-11f0-859f-c724664784c1',
-  entityType = 'ASSET',
-  scope = 'SERVER_SCOPE'
-) => {
-  return get<SystemInfo>(`/api/plugins/telemetry/${entityType}/${entityId}/keys/attributes/${scope}`)
-}
-
 // 获取设备运行状态
-export const getDeviceInfo = (deviceToken = 'ezQAEoPxlgVUUTvkJ2R3', clientKeys = 'UpTime,Running') => {
-  return get<DeviceInfo>(`/api/v1/${deviceToken}/attributes`, { clientKeys })
-}
-
-// 获取设备运行状态
-export const getControlAdviceInfo = (entityType = 'DEVICE', entityId = '8665c900-3587-11f0-b7f4-a52c6a864e88') => {
-  return get<DeviceTimeserie>(`/api/plugins/telemetry/${entityType}/${entityId}/values/timeseries`)
-}
+// export const getControlAdviceInfo = (entityId = '8665c900-3587-11f0-b7f4-a52c6a864e88', entityType = 'DEVICE') => {
+//   return get<DeviceTimeserie>(`/api/plugins/telemetry/${entityType}/${entityId}/values/timeseries`)
+// }
