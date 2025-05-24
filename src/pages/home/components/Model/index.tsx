@@ -7,8 +7,8 @@ import useSystemStore from '@/stores/system'
 
 const ControlAdvice: React.FC = () => {
   const { deviceInfo } = useSystemStore()
-  const running = deviceInfo?.client.Running
-  const time = deviceInfo?.client.UpTime
+  const running = deviceInfo?.client?.Running
+  const time = deviceInfo?.client?.UpTime
 
   return (
     <Card title="运行概览">

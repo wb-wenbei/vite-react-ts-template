@@ -22,11 +22,12 @@ const ThreeModel: React.FC = () => {
 
     // 创建渲染器
     renderer = new THREE.WebGLRenderer({
+      alpha: true, // 启用透明背景
       antialias: true, // 抗锯齿
       logarithmicDepthBuffer: true, // 启用对数深度缓冲
     })
     renderer.setSize(clientWidth, clientHeight)
-    renderer.setClearColor(0xffffff) // 设置背景颜色
+    renderer.setClearColor(0xffffff, 0) // 设置背景颜色
     containerRef.current.appendChild(renderer.domElement)
 
     // 添加光源

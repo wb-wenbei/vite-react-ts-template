@@ -1,5 +1,3 @@
-export const ENTITY_TYPE = 'ASSET'
-
 export interface DataItem {
   key: string
   title: string
