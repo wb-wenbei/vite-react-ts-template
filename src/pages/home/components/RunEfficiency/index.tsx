@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import Card from '@/components/Card'
 import style from './index.module.less'
 import { RUN_DATA_LIST } from '@/constants'
-import { getSystemInfo } from '@/apis'
+import { getRunEfficiencyInfo } from '@/apis'
 import { getTimesToNow } from '@/utils'
 
 const types = ['success', 'warning', 'info', 'error']
@@ -25,7 +25,7 @@ const RunEfficiency: React.FC = () => {
 
   useEffect(() => {
     const loadData = () => {
-      getSystemInfo().then((res) => {
+      getRunEfficiencyInfo().then((res) => {
         setData(res || {})
       })
     }

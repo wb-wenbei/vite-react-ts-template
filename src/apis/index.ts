@@ -34,8 +34,8 @@ export const getDeviceAttributes = (entityId: string, keys = '', entityType = 'D
   return get<DeviceAttribute[]>(`/api/plugins/telemetry/${entityType}/${entityId}/values/attributes`, { keys })
 }
 
-// 获取系统信息
-export const getSystemInfo = (
+// 获取系统运行能效分析信息
+export const getRunEfficiencyInfo = (
   entityId = 'eda30040-3151-11f0-859f-c724664784c1',
   entityType = 'ASSET',
   scope = 'SERVER_SCOPE'
@@ -55,6 +55,11 @@ export const getLatestDeviceTimeseries = (
   entityType = 'DEVICE'
 ) => {
   return get<DeviceTimeserie>(`/api/plugins/telemetry/${entityType}/${entityId}/values/timeseries`, params)
+}
+
+// 获取设备控制状态信息
+export const getDeviceControlInfo = (deviceId = 'a3ef8120-315c-11f0-859f-c724664784c1', scope = 'SHARED_SCOPE') => {
+  return get<DeviceTimeserie>(`/api/plugins/telemetry/${deviceId}/${scope}`)
 }
 
 // 写入设备数据

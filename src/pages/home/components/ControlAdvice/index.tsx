@@ -1,14 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import Card from '@/components/Card'
 import style from './index.module.less'
 import { ADVICES_DATA_LIST, CONTROL_ADVICE } from '@/constants'
-import { getLatestDeviceTimeseries } from '@/apis'
 import { getLatestDeviceTimeserieByKey } from '@/utils'
 import useSystemStore from '@/stores/system'
 
 const ControlAdvice: React.FC = () => {
-  const [info, setInfo] = useState<DeviceTimeserie>({})
   const { deviceList } = useSystemStore()
+
+  const info = useMemo(() => {
+    const device = deviceList.find((item) => item.type === CONTROL_ADVICE.key)
+    if (!device) return {}
+    return device.latestTimeserie || {}
+  }, [deviceList])
 
   const dataList = useMemo(() => {
     return ADVICES_DATA_LIST.map((item) => {
@@ -19,19 +23,6 @@ const ControlAdvice: React.FC = () => {
       }
     })
   }, [info])
-
-  useEffect(() => {
-    const loadData = () => {
-      const deivce = deviceList.find((item) => item.type === CONTROL_ADVICE.key)
-      const entityId = deivce?.id?.id
-      if (!entityId) return
-      getLatestDeviceTimeseries(entityId).then((res) => {
-        setInfo(res)
-      })
-    }
-
-    loadData()
-  }, [deviceList])
 
   return (
     <Card title="控制建议">

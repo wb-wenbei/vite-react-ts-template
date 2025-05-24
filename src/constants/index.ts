@@ -191,7 +191,7 @@ export const CONTROL_ADVICE: DataItem = {
   unit: '',
 }
 
-export const SLUDEG_SIEVE_LIST: DataItem = {
+export const SLUDEG_SIEVE: DataItem = {
   key: 'Sludge_sieve',
   title: '筛分器',
   value: 0,

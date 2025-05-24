@@ -44,7 +44,8 @@ export function getLatestDeviceTimeserieByKey(key: string, data: DeviceTimeserie
 
   switch (key) {
     case 'SludgeScreeningTime': {
-      const { StartTime, StopTime } = (JSON.parse(value as string)[0] || {}) as { StartTime: number; StopTime: number }
+      const valueObj = typeof value === 'string' ? JSON.parse(value) : []
+      const { StartTime = 0, StopTime = 0 } = (valueObj[0] || {}) as { StartTime: number; StopTime: number }
       return ((StopTime - StartTime) / (1000 * 60)).toFixed(2)
     }
 

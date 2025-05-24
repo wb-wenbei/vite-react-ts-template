@@ -128,7 +128,24 @@ interface LatestDeviceTimeserieQuery {
 }
 
 interface DeviceInfo {
-  client: {
+  deviceId?: string
+  UpTime?: number
+  Running?: boolean
+  inactivityAlarmTime?: number
+  lastDisconnectTime?: number
+  lastActivityTime?: number
+  lastConnectTime?: number
+  unit?: string
+  active?: boolean
+  auto_mode?: boolean
+  manual_control?: {
+    SludgeScreeningTime: {
+      StartTime?: number | null
+      StopTime?: number | null
+    }
+  }
+
+  client?: {
     UpTime: number
     Running: boolean
   }

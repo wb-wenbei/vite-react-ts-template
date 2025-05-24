@@ -36,6 +36,11 @@ http.interceptors.response.use(
     return response.data
   },
   (error) => {
+    if (!error.response) {
+      // showNotify(error.code, error.message)
+      return Promise.reject(false)
+    }
+
     const { data } = error.response
     const { status, message } = data as ApiError
 
