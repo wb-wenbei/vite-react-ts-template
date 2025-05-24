@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Card from '@/components/Card'
 import style from './index.module.less'
-import { InputNumber, Radio, Segmented, Space } from 'antd'
+import { InputNumber, Popconfirm, Radio, Segmented, Space } from 'antd'
 import SvgIcon from '@/components/Icon'
 import { CONTROL_ADVICE, RUN_STATUS_OPTIONS } from '@/constants'
 import useSystemStore from '@/stores/system'
@@ -9,6 +9,7 @@ import { getLatestDeviceTimeserieByKey } from '@/utils'
 import { saveDeviceAttributes } from '@/apis'
 
 const ScreenControl: React.FC = () => {
+  const [popOpen, setPopOpen] = useState(false)
   const [mode, setMode] = useState('auto')
   const [manualStatus, setManualStatus] = useState('open')
   const [timeClose, setTimeClose] = useState<number | null>()
@@ -45,10 +46,9 @@ const ScreenControl: React.FC = () => {
   ]
 
   const toggleMode = (e: string) => {
+    setPopOpen(false)
     if (!deviceInfo?.deviceId) return
-
     setMode(e)
-
     const params: Record<string, unknown> = { auto_mode: e === 'auto' }
 
     if (e === 'auto') {
@@ -130,14 +130,22 @@ const ScreenControl: React.FC = () => {
       <div className={style.control}>
         <div className={style.mode}>
           <div className={style.title}>控制模式</div>
-          <Radio.Group
-            value={mode}
-            block
-            optionType="button"
-            buttonStyle="solid"
-            options={modeOptions}
-            onChange={(e) => toggleMode(e.target.value)}
-          />
+          <Popconfirm
+            title="切换控制模式"
+            description="请确认是否需要切换控制模式"
+            open={popOpen}
+            onConfirm={() => toggleMode(mode === 'auto' ? 'manual' : 'auto')}
+            onCancel={() => setPopOpen(false)}
+          >
+            <Radio.Group
+              value={mode}
+              block
+              optionType="button"
+              buttonStyle="solid"
+              options={modeOptions}
+              onChange={() => setPopOpen(true)}
+            />
+          </Popconfirm>
         </div>
 
         <div className={`${style.auto} ${mode === 'auto' ? style.active : ''}`}>

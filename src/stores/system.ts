@@ -14,6 +14,7 @@ interface SystemStore {
   systemInfo?: SystemInfo // 系统名称/背景图信息
   updateSystemInfo: () => void
   deviceList: Device[] // 设备列表及实时数据信息
+  deviceTypeIdMap: Record<string, string>
   updateDeviceList: (customerId?: string) => void
   deviceInfo?: DeviceInfo // 设备运行状态信息
   updateDeviceInfo: () => void
@@ -41,19 +42,28 @@ const useSystemStore = create<SystemStore>()(
         set({ systemInfo: { icon_url, company_name, background_image_url } as SystemInfo })
       },
       deviceList: [],
+      deviceTypeIdMap: {},
       updateDeviceList: (customerId?: string) => {
         const loadDevices = (customerId?: string) => {
           if (!customerId) return
 
           getCustomerDevices({ page: 0, pageSize: 50, customerId: customerId }).then((res) => {
             const deviceList = res.data || []
-            console.log('设备列表', deviceList)
-            set({ deviceList: [...deviceList] })
 
             res.data.forEach((device) => {
               loadAttributes(device, deviceList)
               loadTimeseries(device, deviceList)
             })
+
+            const deviceTypeIdMap = deviceList.reduce((acc, cur) => {
+              return {
+                ...acc,
+                [cur.type as string]: cur.id?.id,
+              }
+            }, {})
+
+            console.log('设备列表', deviceList)
+            set({ deviceList: [...deviceList], deviceTypeIdMap })
           })
         }
 

@@ -10,9 +10,10 @@ type Props = {
 }
 
 const WaterQuality: React.FC<Props> = ({ timeRange }) => {
-  const { deviceList } = useSystemStore()
-  const [xAxisData, setXAxisData] = useState<number[]>([])
-  const [yAxisData, setYAxisData] = useState<number[]>([])
+  const { deviceTypeIdMap } = useSystemStore()
+  const [loading, setLoading] = useState<Record<string, boolean>>({})
+  const [xAxisDataMap, setXAxisDataMap] = useState<Record<string, string[]>>({})
+  const [yAxisDataMap, setYAxisDataMap] = useState<Record<string, number[]>>({})
 
   const chartList = useMemo(() => {
     return ONLINE_DATA_OUT_LIST.map((item) => {
@@ -33,7 +34,7 @@ const WaterQuality: React.FC<Props> = ({ timeRange }) => {
           },
           xAxis: {
             type: 'category',
-            data: xAxisData || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: xAxisDataMap[item.key] || [],
           },
           yAxis: {
             name: item.unit,
@@ -41,7 +42,7 @@ const WaterQuality: React.FC<Props> = ({ timeRange }) => {
           },
           series: [
             {
-              data: yAxisData || [820, 932, 901, 934, 1290, 1330, 1320],
+              data: yAxisDataMap[item.key] || [],
               type: 'line',
               smooth: true,
             },
@@ -49,34 +50,48 @@ const WaterQuality: React.FC<Props> = ({ timeRange }) => {
         } as echarts.EChartsOption,
       }
     })
-  }, [xAxisData, yAxisData])
+  }, [xAxisDataMap, yAxisDataMap])
 
   useEffect(() => {
     const loadData = (timeRange: string[]) => {
       ONLINE_DATA_OUT_LIST.forEach((item) => {
-        const device = deviceList.find((device) => device.type === item.key)
+        const deviceType = item.key
+        const deviceId = deviceTypeIdMap[item.key] || ''
 
-        if (device?.id?.id && device.type) {
+        if (deviceId && deviceType) {
           const startTs = new Date(timeRange[0]).getTime()
           const endTs = new Date(timeRange[1]).getTime()
-          getDeviceTimeseries(device.id.id, { keys: device.type, startTs, endTs }).then((res) => {
-            const list = res?.value || []
-            const xAxisData = list.map((item) => item.ts)
-            setXAxisData(xAxisData)
-            const yAxisData = list.map((item) => item.value as number)
-            setYAxisData(yAxisData)
-          })
+          setLoading((prev) => ({ ...prev, [deviceType]: true }))
+          getDeviceTimeseries(deviceId, { keys: deviceType, startTs, endTs })
+            .then((res) => {
+              const list = res[deviceType] || res.value || []
+              const xAxisData = list.map((item) => new Date(item.ts).toLocaleString())
+              setXAxisDataMap((prev) => {
+                return {
+                  ...prev,
+                  [deviceType]: xAxisData,
+                }
+              })
+              const yAxisData = list.map((item) => item.value as number)
+              setYAxisDataMap((prev) => {
+                return {
+                  ...prev,
+                  [deviceType]: yAxisData,
+                }
+              })
+            })
+            .finally(() => setLoading((prev) => ({ ...prev, [deviceType]: false })))
         }
       })
     }
 
     loadData(timeRange)
-  }, [timeRange, deviceList])
+  }, [timeRange, deviceTypeIdMap])
 
   return (
     <div className={style.content}>
       {chartList.map((item) => {
-        return <ChartCard key={item.key} title={item.title} option={item.options} />
+        return <ChartCard key={item.key} loading={loading[item.key]} title={item.title} option={item.options} />
       })}
     </div>
   )
