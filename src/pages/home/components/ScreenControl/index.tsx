@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Card from '@/components/Card'
 import style from './index.module.less'
-import { InputNumber, Modal, Popconfirm, Radio, Segmented, Space } from 'antd'
+import { InputNumber, Modal, Radio, Segmented, Space } from 'antd'
 import SvgIcon from '@/components/Icon'
 import { CONTROL_ADVICE, RUN_STATUS_OPTIONS } from '@/constants'
 import useSystemStore from '@/stores/system'
