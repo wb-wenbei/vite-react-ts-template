@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Card from '@/components/Card'
 import style from './index.module.less'
-import { InputNumber, Popconfirm, Radio, Segmented, Space } from 'antd'
+import { InputNumber, Modal, Popconfirm, Radio, Segmented, Space } from 'antd'
 import SvgIcon from '@/components/Icon'
 import { CONTROL_ADVICE, RUN_STATUS_OPTIONS } from '@/constants'
 import useSystemStore from '@/stores/system'
@@ -9,7 +9,8 @@ import { getLatestDeviceTimeserieByKey } from '@/utils'
 import { saveDeviceAttributes } from '@/apis'
 
 const ScreenControl: React.FC = () => {
-  const [popOpen, setPopOpen] = useState(false)
+  const [modeModalOpen, setModeModalOpen] = useState(false)
+  const [statusModalOpen, setStatusModalOpen] = useState(false)
   const [mode, setMode] = useState('auto')
   const [manualStatus, setManualStatus] = useState('open')
   const [timeClose, setTimeClose] = useState<number | null>()
@@ -46,7 +47,7 @@ const ScreenControl: React.FC = () => {
   ]
 
   const toggleMode = (e: string) => {
-    setPopOpen(false)
+    setModeModalOpen(false)
     if (!deviceInfo?.deviceId) return
     setMode(e)
     const params: Record<string, unknown> = { auto_mode: e === 'auto' }
@@ -66,10 +67,9 @@ const ScreenControl: React.FC = () => {
   }
 
   const toggleStatus = (e: string) => {
+    setStatusModalOpen(false)
     if (!deviceInfo?.deviceId) return
-
     setManualStatus(e)
-
     const params: DeviceInfo = {
       manual_control: {
         SludgeScreeningTime: {
@@ -130,22 +130,14 @@ const ScreenControl: React.FC = () => {
       <div className={style.control}>
         <div className={style.mode}>
           <div className={style.title}>控制模式</div>
-          <Popconfirm
-            title="切换控制模式"
-            description="请确认是否需要切换控制模式"
-            open={popOpen}
-            onConfirm={() => toggleMode(mode === 'auto' ? 'manual' : 'auto')}
-            onCancel={() => setPopOpen(false)}
-          >
-            <Radio.Group
-              value={mode}
-              block
-              optionType="button"
-              buttonStyle="solid"
-              options={modeOptions}
-              onChange={() => setPopOpen(true)}
-            />
-          </Popconfirm>
+          <Radio.Group
+            value={mode}
+            block
+            optionType="button"
+            buttonStyle="solid"
+            options={modeOptions}
+            onChange={() => setModeModalOpen(true)}
+          />
         </div>
 
         <div className={`${style.auto} ${mode === 'auto' ? style.active : ''}`}>
@@ -167,7 +159,7 @@ const ScreenControl: React.FC = () => {
               value={manualStatus}
               disabled={mode !== 'manual'}
               options={RUN_STATUS_OPTIONS}
-              onChange={toggleStatus}
+              onChange={() => setStatusModalOpen(true)}
             />
           </div>
           <div className={style.item}>
@@ -184,6 +176,23 @@ const ScreenControl: React.FC = () => {
           </div>
         </div>
       </div>
+      <Modal
+        title="切换控制模式"
+        open={modeModalOpen}
+        onOk={() => toggleMode(mode === 'auto' ? 'manual' : 'auto')}
+        onCancel={() => setModeModalOpen(false)}
+      >
+        <p>请确认是否需要切换控制模式</p>
+      </Modal>
+
+      <Modal
+        title="关闭/开启设备"
+        open={statusModalOpen}
+        onOk={() => toggleStatus(manualStatus === 'open' ? 'close' : 'open')}
+        onCancel={() => setStatusModalOpen(false)}
+      >
+        <p>请确认是否需要关闭/开启设备</p>
+      </Modal>
     </Card>
   )
 }
