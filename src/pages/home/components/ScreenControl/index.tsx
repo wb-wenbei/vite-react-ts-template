@@ -15,7 +15,7 @@ const ScreenControl: React.FC = () => {
   const [manualStatus, setManualStatus] = useState('open')
   const [timeClose, setTimeClose] = useState<number | null>()
   const { deviceInfo, deviceList } = useSystemStore()
-  const time = deviceInfo?.client?.UpTime || deviceInfo?.UpTime
+  const time = deviceInfo?.UpTime
 
   const adviceTime = useMemo(() => {
     const device = deviceList.find((item) => item.type === CONTROL_ADVICE.key)
