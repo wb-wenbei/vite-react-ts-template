@@ -6,6 +6,7 @@ import { getRunEfficiencyInfo } from '@/apis'
 import { getTimesToNow } from '@/utils'
 
 const types = ['success', 'warning', 'info', 'error']
+let interval: number | null = null
 
 const RunEfficiency: React.FC = () => {
   const [data, setData] = useState<InfoItem[]>([])
@@ -24,11 +25,17 @@ const RunEfficiency: React.FC = () => {
   }, [data])
 
   useEffect(() => {
+    if (interval) return
+
     const loadData = () => {
       getRunEfficiencyInfo().then((res) => {
         setData(res || {})
       })
     }
+
+    interval = setInterval(() => {
+      loadData()
+    }, 60000)
 
     loadData()
   }, [])
