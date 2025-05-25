@@ -72,6 +72,15 @@ export const saveDeviceAttributes = (
   return post(`/api/plugins/telemetry/${entityType}/${entityId}/timeseries/${scope}`, data)
 }
 
+// 写入设备控制数据
+export const saveDeviceControlAttributes = (
+  deviceId: string,
+  data: Record<string, unknown>,
+  scope = 'SHARED_SCOPE'
+) => {
+  return post(`/api/plugins/telemetry/${deviceId}/${scope}`, data)
+}
+
 // 获取设备运行状态
 // export const getControlAdviceInfo = (entityId = '8665c900-3587-11f0-b7f4-a52c6a864e88', entityType = 'DEVICE') => {
 //   return get<DeviceTimeserie>(`/api/plugins/telemetry/${entityType}/${entityId}/values/timeseries`)

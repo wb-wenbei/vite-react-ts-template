@@ -6,12 +6,12 @@ import SvgIcon from '@/components/Icon'
 import { CONTROL_ADVICE, RUN_STATUS_OPTIONS } from '@/constants'
 import useSystemStore from '@/stores/system'
 import { getLatestDeviceTimeserieByKey } from '@/utils'
-import { saveDeviceAttributes } from '@/apis'
+import { saveDeviceControlAttributes } from '@/apis'
 
 const ScreenControl: React.FC = () => {
   const [modeModalOpen, setModeModalOpen] = useState(false)
   const [statusModalOpen, setStatusModalOpen] = useState(false)
-  const [mode, setMode] = useState('auto')
+  const [mode, setMode] = useState('')
   const [manualStatus, setManualStatus] = useState('open')
   const [timeClose, setTimeClose] = useState<number | null>()
   const { deviceInfo, deviceList } = useSystemStore()
@@ -61,7 +61,7 @@ const ScreenControl: React.FC = () => {
       }
     }
 
-    saveDeviceAttributes(deviceInfo.deviceId, params).catch(() => {
+    saveDeviceControlAttributes(deviceInfo.deviceId, params).catch(() => {
       setMode(e === 'auto' ? 'manual' : 'auto')
     })
   }
@@ -81,7 +81,7 @@ const ScreenControl: React.FC = () => {
 
     if (e === 'open') params.manual_control!.SludgeScreeningTime.StartTime = Date.now()
 
-    saveDeviceAttributes(deviceInfo.deviceId, params as Record<string, unknown>).catch(() => {
+    saveDeviceControlAttributes(deviceInfo.deviceId, params as Record<string, unknown>).catch(() => {
       setMode(e === 'auto' ? 'manual' : 'auto')
     })
   }
@@ -100,7 +100,7 @@ const ScreenControl: React.FC = () => {
       SludgeScreeningTime.StopTime = Date.now() + e * 60 * 60 * 1000
     }
 
-    saveDeviceAttributes(deviceInfo.deviceId, { manual_control: { SludgeScreeningTime } }).catch(() => {
+    saveDeviceControlAttributes(deviceInfo.deviceId, { manual_control: { SludgeScreeningTime } }).catch(() => {
       setTimeClose(lastValue)
     })
   }
