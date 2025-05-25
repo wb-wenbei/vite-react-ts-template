@@ -8,7 +8,7 @@ export function getOptionsByDeviceTypes(deviceList: Device[], types: string[]) {
       const unit = device.attributeList?.find((item) => item.key === 'unit')?.value || ''
 
       const latestTimeserie = device.latestTimeserie || ({} as DeviceTimeserie)
-      const valueList = latestTimeserie[device.type as string] || []
+      const valueList = latestTimeserie[device.type as string] || latestTimeserie['value'] || []
       const value = valueList[0]?.value || '--'
 
       return {
@@ -26,7 +26,7 @@ export function updateOptionsValues(deviceList: Device[], options: DataItem[]) {
     const device = deviceList.find((device) => device.type === option.key)
     if (device) {
       const latestTimeserie = device.latestTimeserie || ({} as DeviceTimeserie)
-      const valueList = latestTimeserie[device.type as string] || []
+      const valueList = latestTimeserie[device.type as string] || latestTimeserie['value'] || []
       const value = valueList[0]?.value || '--'
       return {
         ...option,

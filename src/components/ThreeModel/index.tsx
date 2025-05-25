@@ -42,7 +42,7 @@ const ThreeModel: React.FC = () => {
     // 加载模型
     const loader = new GLTFLoader()
     loader.load(
-      '/models/buster_drone.glb',
+      '/models/model.glb',
       (gltf) => {
         const model = gltf.scene
         model.position.set(0, 0, 0) // 设置模型位置

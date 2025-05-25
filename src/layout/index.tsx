@@ -7,11 +7,12 @@ import styles from './index.module.less'
 import useUserStore from '@/stores/user'
 import useSystemStore from '@/stores/system'
 
-let loaded = false
+let interval: number | null = null
 
 const App: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
+
   const { clear, userInfo, customerId } = useUserStore()
   const { systemInfo, updateDeviceInfo, updateDeviceList } = useSystemStore()
 
@@ -67,8 +68,12 @@ const App: React.FC = () => {
   // }, [updateRunEfficiencyInfo])
 
   useEffect(() => {
-    if (loaded) return
-    loaded = true
+    if (interval) return
+
+    interval = setInterval(() => {
+      updateDeviceList(customerId)
+    }, 60000)
+
     updateDeviceList(customerId)
   }, [customerId, updateDeviceList])
 
