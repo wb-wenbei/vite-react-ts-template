@@ -74,10 +74,11 @@ export const getTimesToNow = (time?: number, type = 'day') => {
 
 export const getDeiviceLatestValueByKey = (deviceList: Device[], key: string) => {
   const device = deviceList.find((device) => device.type === key)
+  const latestTimeserie = device?.latestTimeserie || ({} as DeviceTimeserie)
 
-  const valueList = (device?.latestTimeserie || {})[key]
+  const valueList = latestTimeserie[key] || latestTimeserie['value'] || []
 
-  const value = valueList?.[0]?.value || ''
+  const value = valueList[0]?.value || ''
 
   return { device, value }
 }
