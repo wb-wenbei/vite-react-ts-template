@@ -97,6 +97,7 @@ const ScreenControl: React.FC = () => {
     if (!e) {
       SludgeScreeningTime.StopTime = null
     } else {
+      SludgeScreeningTime.StartTime = Date.now()
       SludgeScreeningTime.StopTime = Date.now() + e * 60 * 60 * 1000
     }
 
