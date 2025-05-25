@@ -9,25 +9,25 @@ export const RUN_DATA_LIST: DataItem[] = [
   {
     key: 'up_time',
     title: '系统上线时间',
-    value: 40,
+    value: 0,
     unit: '天',
   },
   {
     key: 'saved_energy',
     title: '累计节省电耗',
-    value: 46944,
+    value: 0,
     unit: 'kwh/m³',
   },
   {
     key: 'saved_chemical_medicine',
     title: '累计节省药耗',
-    value: 97,
+    value: 0,
     unit: 'mg/m³',
   },
   {
     key: 'sludge_reduction',
     title: '累计减少污泥量',
-    value: 10944,
+    value: 0,
     unit: 'kg',
   },
 ]
@@ -112,7 +112,7 @@ export const ONLINE_DATA_IN_EXTRA_LIST = [
   {
     key: 'influent_flow',
     title: '进水流量',
-    value: 2.56,
+    value: 0,
     unit: 'm³/d',
   },
 ]
@@ -150,19 +150,19 @@ export const CONSUME_DATA_LIST: DataItem[] = [
   {
     key: 'power_consumption',
     title: '电耗',
-    value: 2.56,
+    value: 0,
     unit: 'kwh/m³',
   },
   {
     key: 'chemical_consumption',
     title: '药耗',
-    value: 2.56,
+    value: 0,
     unit: 'mg/L',
   },
   {
     key: 'excess_sludge_reduction',
     title: '剩余污泥量',
-    value: 2.56,
+    value: 0,
     unit: 'mg/L',
   },
 ]

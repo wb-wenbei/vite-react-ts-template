@@ -144,7 +144,7 @@ const ScreenControl: React.FC = () => {
           <div className={style.title}>自动控制{mode === 'auto' ? '已' : '未'}启动</div>
           <div className={style.item}>
             <div>今日建议开启时长</div>
-            <div className={style.itemValue}>{adviceTime} min</div>
+            <div className={style.itemValue}>{adviceTime} 小时</div>
           </div>
           <div className={style.item}>
             <div>今日开启时间</div>
