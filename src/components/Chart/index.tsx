@@ -50,7 +50,6 @@ const Chart: React.FC<Props> = ({ option, noMerge = true }) => {
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
-      console.log('resize')
       chartInstance.current?.resize()
     })
 

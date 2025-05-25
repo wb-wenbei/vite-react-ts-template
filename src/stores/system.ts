@@ -103,7 +103,9 @@ const useSystemStore = create<SystemStore>()(
       deviceInfo: undefined,
       updateDeviceInfo: async () => {
         const deviceInfo = await getDeviceInfo()
-        set({ deviceInfo })
+        set((state) => {
+          return { deviceInfo: { ...state.deviceInfo, ...deviceInfo } }
+        })
       },
       runEfficiencyInfo: [],
       updateRunEfficiencyInfo: async () => {
