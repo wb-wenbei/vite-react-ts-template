@@ -17,9 +17,9 @@ const RunEfficiency: React.FC = () => {
 
       if (!infoItem) return { ...item, value: '--' }
 
-      let value: number | string = +(infoItem?.value || 0) * 1000
+      let value = infoItem?.value
       // 系统上线时间是一个时间戳（秒），转换为距当前时间的天数
-      if (item.key === 'up_time') value = getTimesToNow(value) as string
+      if (item.key === 'up_time') value = getTimesToNow(+(value || 0) * 1000) as string
       return { ...item, value }
     })
   }, [data])
